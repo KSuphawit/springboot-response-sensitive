@@ -15,7 +15,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,12 +47,10 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
         }
 
         // if sensitive controller always remove sensitive information
-        if (isSensitiveController(returnType)) {
-            return removeSensitive(body);
-        }
+        if (isSensitiveController(returnType)) return removeSensitive(body);
 
         // if not sensitive api can return data with sensitive information
-        if (!isSensitiveApi(returnType.getAnnotatedElement())) return body;
+        if (!isSensitiveApi(returnType)) return body;
 
         return removeSensitive(body);
     }
@@ -86,7 +83,7 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
                 sensitiveField.setAccessible(true);
                 sensitiveField.set(data, null);
             }
-            // check nonsensitive object if it has sensitive field set to null
+            // check nonsensitive object if it has any sensitive field set that field to null
             for (Field nonsensitiveField : nonsensitiveFields) {
                 nonsensitiveField.setAccessible(true);
                 Object fieldValue = nonsensitiveField.get(data);
@@ -109,7 +106,7 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
         return returnType.getDeclaringClass().isAnnotationPresent(SensitiveAPI.class);
     }
 
-    private boolean isSensitiveApi(AnnotatedElement annotatedElement) {
-        return annotatedElement.getAnnotation(SensitiveAPI.class) != null;
+    private boolean isSensitiveApi(MethodParameter returnType) {
+        return returnType.getAnnotatedElement().getAnnotation(SensitiveAPI.class) != null;
     }
 }
