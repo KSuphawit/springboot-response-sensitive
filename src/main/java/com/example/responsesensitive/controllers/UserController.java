@@ -12,30 +12,134 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
+    /**
+     * @return
+     * {
+     *     "data": {
+     *         "name": "John Doe",
+     *         "email": "johndoe@linecorp.com",
+     *         "nationalId": "nationalId",
+     *         "phone": {
+     *             "network": "AIS",
+     *             "phoneNumber": "0812345678"
+     *         },
+     *         "financial": {
+     *             "bankAccount": "122345",
+     *             "salary": 100
+     *         },
+     *         "addresses": [
+     *             {
+     *                 "province": "Bkk",
+     *                 "postCode": "11111",
+     *                 "address": "address1"
+     *             },
+     *             {
+     *                 "province": "Cnx",
+     *                 "postCode": "22222",
+     *                 "address": "address2"
+     *             }
+     *         ]
+     *     }
+     * }
+    **/
     @GetMapping("/include-sensitive")
     public BaseResponse<User> getUserIncludeSensitive() {
-        User user = new User("John Doe", "johndoe@linecorp.com", "nationalId", "phoneNumber");
-        return new BaseResponse<>(user);
+        return new BaseResponse<>(User.mockUser());
     }
 
+    /**
+     * @return
+     *{
+     *     "data": {
+     *         "name": "John Doe",
+     *         "email": "johndoe@linecorp.com",
+     *         "phone": {
+     *             "network": "AIS"
+     *         },
+     *         "addresses": [
+     *             {
+     *                 "province": "Bkk",
+     *                 "postCode": "11111"
+     *             },
+     *             {
+     *                 "province": "Cnx",
+     *                 "postCode": "22222"
+     *             }
+     *         ]
+     *     }
+     * }
+     **/
     @GetMapping("/exclude-sensitive")
     @SensitiveAPI
     public BaseResponse<User> getUserExcludeSensitive() {
-        User user = new User("John Doe", "johndoe@linecorp.com", "nationalId", "phoneNumber");
-        return new BaseResponse<>(user);
+        return new BaseResponse<>(User.mockUser());
     }
 
+    /**
+     * @return
+     * {
+     *     "name": "John Doe",
+     *     "email": "johndoe@linecorp.com",
+     *     "nationalId": "nationalId",
+     *     "phone": {
+     *         "network": "AIS",
+     *         "phoneNumber": "0812345678"
+     *     },
+     *     "financial": {
+     *         "bankAccount": "122345",
+     *         "salary": 100
+     *     },
+     *     "addresses": [
+     *         {
+     *             "province": "Bkk",
+     *             "postCode": "11111",
+     *             "address": "address1"
+     *         },
+     *         {
+     *             "province": "Cnx",
+     *             "postCode": "22222",
+     *             "address": "address2"
+     *         }
+     *     ]
+     * }
+     **/
     @GetMapping("/no-base/include-sensitive")
     public User getUserIncludeSensitiveWithoutBaseResponse() {
-        return new User("John Doe", "johndoe@linecorp.com", "nationalId", "phoneNumber");
+        return User.mockUser();
     }
 
+    /**
+     * @return
+     * {
+     *     "name": "John Doe",
+     *     "email": "johndoe@linecorp.com",
+     *     "phone": {
+     *         "network": "AIS"
+     *     },
+     *     "addresses": [
+     *         {
+     *             "province": "Bkk",
+     *             "postCode": "11111"
+     *         },
+     *         {
+     *             "province": "Cnx",
+     *             "postCode": "22222"
+     *         }
+     *     ]
+     * }
+     **/
     @GetMapping("/no-base/exclude-sensitive")
     @SensitiveAPI
     public User getUserExcludeSensitiveWithoutBaseResponse() {
-        return new User("John Doe", "johndoe@linecorp.com", "nationalId", "phoneNumber");
+        return User.mockUser();
     }
 
+    /**
+     * @return
+     * {
+     *     "success": true
+     * }
+     **/
     @GetMapping("/void")
     public void voidResponse() {
     }
