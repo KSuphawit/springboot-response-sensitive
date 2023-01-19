@@ -5,14 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseResponse<T> implements Serializable {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+
     @JsonProperty("success")
     private Boolean success;
 
     @JsonProperty("data")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     public BaseResponse() {

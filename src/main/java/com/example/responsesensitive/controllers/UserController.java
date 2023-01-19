@@ -41,7 +41,7 @@ public class UserController {
      *         ]
      *     }
      * }
-    **/
+     **/
     @GetMapping("/include-sensitive")
     public BaseResponse<User> getUserIncludeSensitive() {
         return new BaseResponse<>(User.mockUser());

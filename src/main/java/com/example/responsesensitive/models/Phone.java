@@ -4,12 +4,12 @@ import com.example.responsesensitive.annotations.Sensitive;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Phone {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+
     @JsonProperty("network")
     private String network;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("phoneNumber")
     @Sensitive
     private String phoneNumber;

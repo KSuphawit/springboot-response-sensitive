@@ -4,7 +4,6 @@ package com.example.responsesensitive.configs;
 import com.example.responsesensitive.annotations.Sensitive;
 import com.example.responsesensitive.annotations.SensitiveAPI;
 import com.example.responsesensitive.models.BaseResponse;
-import com.example.responsesensitive.utils.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
