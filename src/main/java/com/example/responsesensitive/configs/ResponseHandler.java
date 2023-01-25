@@ -107,6 +107,6 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
     }
 
     private boolean isSensitiveApi(MethodParameter returnType) {
-        return returnType.getAnnotatedElement().getAnnotation(SensitiveAPI.class) != null;
+        return returnType.getAnnotatedElement().isAnnotationPresent(SensitiveAPI.class);
     }
 }
