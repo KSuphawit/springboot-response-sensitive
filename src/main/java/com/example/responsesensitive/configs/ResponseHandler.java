@@ -87,7 +87,7 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
             for (Field nonsensitiveField : nonsensitiveFields) {
                 nonsensitiveField.setAccessible(true);
                 Object fieldValue = nonsensitiveField.get(data);
-                Object removed = fieldValue instanceof List ? removeListSensitiveInformation((List<?>) fieldValue) : removeSensitiveInformation(fieldValue);
+                Object removed = removeSensitive(fieldValue);
                 nonsensitiveField.set(data, removed);
             }
         } catch (Exception e) {
