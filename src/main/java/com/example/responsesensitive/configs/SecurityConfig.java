@@ -1,5 +1,6 @@
 package com.example.responsesensitive.configs;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Value("${app.security.username}")
+    private String username;
+
+    @Value("${app.security.password}")
+    private String password;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,8 +40,8 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("password"))
+                .username(username)
+                .password(passwordEncoder().encode(password))
                 .roles("USER")
                 .build();
 
